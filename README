@@ -2,3 +2,21 @@ MultiJobManager.scala is a multiplexing job manager that sends jobs for local or
 MultithreadShellJobManager.scala runs as many local jobs in parallel as you have processors.
 
 Within a Queue script, assign native args like 'f.jobNativeArgs = List("shell")' to send a particular job to the shell manager instead of the remote PBS system as per usual, then use -jobRunner Multi when running Queue.
+
+To build: you could include these in a Maven build of Queue; however that takes a long time so I prefer to build against an existing Queue jar file.
+
+1. Supposing you already have a Queue jar file called Queue.jar, find out what version of Scala it embeds:
+
+$ java -cp Queue.jar scala.tools.nsc.Main -version
+
+For example, with Queue 3.3 I get:
+
+Scala compiler version 2.10.2 -- Copyright 2002-2013, LAMP/EPFL
+
+2. Get a matching version of the Scala compiler from http://www.scala-lang.org/
+
+3. Build: scalac -classpath Queue.jar *.scala
+
+4. Run Queue using the newly build extensions: instead of the usual java -jar Queue.jar ..., use:
+
+java -cp Queue.jar:queue-extensions/ org.broadinstitute.gatk.queue.QCommandLine ...
