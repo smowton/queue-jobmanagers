@@ -1,0 +1,4 @@
+MultiJobManager.scala is a multiplexing job manager that sends jobs for local or remote (currently hard-wired PBS) execution dependent on a per-job flag.
+MultithreadShellJobManager.scala runs as many local jobs in parallel as you have processors.
+
+Within a Queue script, assign native args like 'f.jobNativeArgs = List("shell")' to send a particular job to the shell manager instead of the remote PBS system as per usual, then use -jobRunner Multi when running Queue.
